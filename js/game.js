@@ -29,10 +29,12 @@ const Game = {
 
     createGame: function () {
         this.background = new Background(this.ctx, this.width, this.height)
+        this.jumper = new Jumper(this.ctx, 100, 116, this.width, this.height)
     },
 
     drawAll: function () {
         this.background.draw();
+        this.jumper.draw();
     },
 
     clear: function () {
