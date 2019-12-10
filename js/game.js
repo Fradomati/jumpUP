@@ -3,12 +3,17 @@ let w = window.innerHeight;
 let h = window.innerHeight;
 let delta = 0;
 let last = 0;
+let jumperMoves = []
+let jumperJump = []
+let goJump = false;
+let goDown = false;
 
 const Game = {
     canvas: undefined,
     ctx: undefined,
     width: undefined,
     height: undefined,
+    // moves: [],
 
 
     fps: 60,
@@ -39,17 +44,65 @@ const Game = {
 
     clear: function () {
         this.ctx.clearRect(0, 0, this.width, this.height)
-    }
+    },
+
+    move: function () {
+        this.jumper.move()
+    },
+
+    jump: function() {
+        this.jumper.jump()
+        this.jumper.down()
+    },
+
 }
 
-function a(){
+// Bucle de renderizado
+
+function a() {
     function renderizado() {
         window.requestAnimationFrame(renderizado);
         Game.clear()
         Game.drawAll()
+        Game.move()
+        Game.jump()
     }
     window.requestAnimationFrame(renderizado)
 }
+
+// Keyboards
+
+document.addEventListener("keydown", function (e) {
+    if (e.keyCode == 65 || e.keyCode == 68) { jumperMoves.push(e.keyCode) }
+    else if (e.keyCode == 32) { jumperJump.push(e.keyCode) }
+
+})
+
+document.addEventListener("keyup", function () {
+    jumperMoves = []
+    goJump = true
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
