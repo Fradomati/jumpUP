@@ -36,11 +36,14 @@ const Game = {
     createGame: function () {
         this.background = new Background(this.ctx, this.width, this.height)
         this.jumper = new Jumper(this.ctx, 100, 116, this.width, this.height)
+        this.obstacles = new Obstacles(this.ctx);
     },
 
     drawAll: function () {
         this.background.draw();
         this.jumper.draw();
+        this.obstacles.draw();
+        
     },
 
     clear: function () {
