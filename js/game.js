@@ -1,12 +1,13 @@
 let game;
-let w = window.innerHeight;
-let h = window.innerHeight;
-let delta = 0;
-let last = 0;
 let jumperMoves = []
 let jumperJump = []
 let goJump = false;
 let goDown = false;
+let power = 9;
+
+/*
+let delta = 0;
+let last = 0; */
 
 const Game = {
     canvas: undefined,
@@ -74,7 +75,7 @@ function a() {
 
 document.addEventListener("keydown", function (e) {
     if (e.keyCode == 65 || e.keyCode == 68) { jumperMoves.push(e.keyCode) }
-    else if (e.keyCode == 32) { jumperJump.push(e.keyCode) }
+    else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
 
 })
 
@@ -83,6 +84,14 @@ document.addEventListener("keyup", function () {
     goJump = true
 })
 
+
+
+// Functions
+
+function pushJumps(e){
+    for(let i = 0; i < power; i++){jumperJump.push(e)}
+    
+}
 
 
 

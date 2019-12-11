@@ -7,10 +7,13 @@ class Jumper {
         this.image = new Image();
         this.image.src = "img/idle_1.png";
 
+        
         this.posX = canvasWidth / 2 - height / 2;
+
+        this.posY0 = canvasHeight * 0.98 - width;
         this.posY = canvasHeight * 0.98 - width;
 
-        this.vel = 6
+        this.vel = 5       
         this.power = 1
     }
 
@@ -20,8 +23,9 @@ class Jumper {
     }
 
     move() {
+        
         // Movimientos laterales, uso una array para que tenga un pequeño Sprint.
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             // Limpio el array de jumperMoves para que no carge la ram
             if (jumperMoves.length % 5 == 0) jumperMoves.splice(2, 2)
 
@@ -53,10 +57,10 @@ class Jumper {
 
     down() {
         if(goDown == true){
-            if(this.posY != 862.36){
+            if(this.posY != this.posY0){
                 this.posY += this.vel * 2.5
                 this.posX += this.vel / 2
-            } else if (this.posY == 862.36) {
+            } else if (this.posY == this.posY0) {
                 goDown = false;
             }
         }
