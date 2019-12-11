@@ -7,13 +7,13 @@ class Jumper {
         this.image = new Image();
         this.image.src = "img/idle_1.png";
 
-        
+
         this.posX = canvasWidth / 2 - height / 2;
 
         this.posY0 = canvasHeight * 0.98 - width;
         this.posY = canvasHeight * 0.98 - width;
 
-        this.vel = 5       
+        this.vel = 5
         this.power = 1
     }
 
@@ -23,7 +23,7 @@ class Jumper {
     }
 
     move() {
-        
+
         // Movimientos laterales, uso una array para que tenga un pequeño Sprint.
         for (let i = 0; i < 3; i++) {
             // Limpio el array de jumperMoves para que no carge la ram
@@ -40,37 +40,51 @@ class Jumper {
     }
 
     jump() {
-      if(goJump === true){
-        if(this.power <= maxJump(jumperJump) ){
-            this.posY -= this.vel * 5
-            this.posX += this.vel * 2.5 // REVISAR EL ÁNGULO
-            this.power++
-        } else if(this.power > maxJump(jumperJump)){
-            this.power = 1
-            jumperJump = []
-            goJump = false;
-            goDown = true;
+        if (goJump === true) {
+            if (this.power <= maxJump(jumperJump)) {
+                this.posY -= this.vel * 5
+                this.posX += this.vel * 2.5 // REVISAR EL ÁNGULO
+                this.power++
+            } else if (this.power > maxJump(jumperJump)) {
+                this.power = 1
+                jumperJump = []
+                goJump = false;
+                goDown = true;
+            }
+
         }
-        
-      }
     }
 
     down() {
-        if(goDown == true){
-            if(this.posY != this.posY0){
+        if (goDown == true) {
+            if (this.posY != this.posY0) {
                 this.posY += this.vel * 2.5
                 this.posX += this.vel / 2
+                this.collision(this.posX, this.posY)
             } else if (this.posY == this.posY0) {
                 goDown = false;
             }
         }
     }
+
+    collision(x, y) {
+        for (let i = 0; i < numObs; i++) {
+            if (y >= obsY[i] - 116 && y <= (obsY[i]-116 + obsSize2[i])) {
+                if (x >= obsX[i] -90 && x <= (obsX[i] + obsSize1[i])) {
+                    goDown = false;
+                    this.posY = obsY[i] - 116
+                }
+
+            }
+        }
+
+    }
 }
 
 // Función para potencia de salto
 
-function maxJump(a){
-    if(a.length >= 20){
+function maxJump(a) {
+    if (a.length >= 20) {
         return 20
     } else {
         return a.length
