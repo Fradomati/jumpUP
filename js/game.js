@@ -4,7 +4,7 @@ let jumperMove = undefined;
 let jumperJump = []
 let goJump = false;
 let goDown = false;
-let power = 9;
+let power = 2;
 
 /*
 let delta = 0;
@@ -109,11 +109,13 @@ document.addEventListener("keydown", function (e) {
 document.addEventListener("keyup", function (e) {
     go = false
 
-    if (e.keyCode == 32 || e.keyCode == 65 || e.keyCode == 68) {
+    if ( e.keyCode == 65 || e.keyCode == 68) {
         jumperMove = []
-        goJump = true;
+        
 
        
+    } else if( e.keyCode == 32) {
+        goJump = true;
     }
 
 })

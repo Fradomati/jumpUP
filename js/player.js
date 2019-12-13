@@ -10,22 +10,35 @@ class Jumper {
 
         this.posX = canvasWidth / 2 - height / 2;
 
-        this.posY0 = canvasHeight * 0.98- width;
+        this.posY0 = canvasHeight * 0.98 - width;
         this.posY = canvasHeight * 0.98 - width;
 
         // Medidas de Caida 
 
-        this.vel = 6
-        this.power = 0
+        this.vel = 3
+        this.up = 20
+        this.power = 1
         this.grty = this.vel
-        this.distance = 1
+        this.distance = 5
         this.stop = 1
 
         this.obsFloor = []
     }
 
-    gravity() {
-        this.posY += this.grty
+    gravity(a) {
+        if (this.posY < this.posY0) {
+            this.posY += this.grty * 4
+            
+            this.angulo()
+        } else {
+            console.log("hola")
+            this.posY += this.grty
+        }
+    }
+
+    angulo() {
+        this.posX += this.distance
+        console.log("angulo:", this.posX)
     }
 
     draw() {
@@ -34,20 +47,20 @@ class Jumper {
 
     move() {
 
-      this.posY -= this.grty
+        this.posY -= this.grty
 
-        if(go == true){
+        if (go == true) {
             if (jumperMove === 65) {
-                this.posX -= this.vel
+                this.posX -= this.vel * 2
             }
 
-            else if (jumperMove=== 68) {
-                this.posX += this.vel
+            else if (jumperMove === 68) {
+                this.posX += this.vel * 2
             }
         }
 
-          
-        
+
+
 
     }
 
@@ -58,40 +71,40 @@ class Jumper {
 
     jump() {
 
-        if(goJump === true && jumperJump.length > 0){
-            if(this.power <= maxJump(jumperJump) ){
-                this.posY -= this.vel * 5
+        if (goJump === true && jumperJump.length > 0) {
+            if (this.power <= maxJump(jumperJump)) {
+                this.posY -= this.up * power
+                console.log(this.power)
                 this.posX += this.vel * 2.5 // REVISAR EL ÁNGULO
                 this.power++
-            } else if(this.power > maxJump(jumperJump)){
+                
+            } else if (this.power > maxJump(jumperJump)) {
                 this.power = 1
                 jumperJump = []
                 goJump = false;
-               // goDown = true;
+                // goDown = true;
             }
-    
-          }
-        } 
 
-        
-    
+        }
+        this.collision(this.posY, this.posX)
+    }
+
+
+
 
     down() {
-        
-        
+
     }
 
     collision(x, y) {
         for (let i = 0; i < numObs; i++) {
-            if (y <= obsY[i] - 116 && y >= (obsY[i] - 116 + obsSize2[i])) {
+            if (y <= obsY[i] - 116 && y >= (obsY[i] - 116 + obsSize2[i])) { // Esto sería si golpease por abajo
                 //this.stop = 1
-            } else if (y >= obsY[i] - 116 && y <= (obsY[i] - 116 + obsSize2[i])) {
-                if (x >= obsX[i] - 90 && x <= (obsX[i] + obsSize1[i])) {
-                   // goDown = false;
+            } else if (y >= obsY[i] - 116 && y <= (obsY[i] - 116 + obsSize2[i])) { // Significa que viene de arriba, cayendo
+                if (x >= obsX[i] - 90 && x <= (obsX[i] + obsSize1[i])) { // Aquí me mide si cae entre los valores de un cuadro
                     this.posY = obsY[i] - 116
                     //this.stop = 1 
                     this.obsFloor = [obsX[i], obsX[i] + obsSize1[i]] // tamaño de la plataforma
-
                 }
 
             }
