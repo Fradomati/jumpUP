@@ -10,42 +10,43 @@ class Jumper {
 
         this.posX = canvasWidth / 2 - height / 2;
 
-        this.posY0 = canvasHeight * 0.98 - width;
+        this.posY0 = canvasHeight * 0.98- width;
         this.posY = canvasHeight * 0.98 - width;
+
+        // Medidas de Caida 
 
         this.vel = 6
         this.power = 0
-        this.grty = 0
+        this.grty = this.vel
+        this.distance = 1
+        this.stop = 1
 
         this.obsFloor = []
     }
 
     gravity() {
-        this.posY += this.grty  
+        this.posY += this.grty
     }
 
     draw() {
         this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
     }
 
-    move(vel) {
-        //console.log("plataforma", this.obsFloor)
-       
-       if (this.noFloor() == true) return undefined
-       //if(this.posY == posY0) 
-        // Movimientos laterales, uso una array para que tenga un pequeño Sprint.
-        for (let i = 0; i < 1; i++) {
-            // Limpio el array de jumperMoves para que no carge la ram
-            if (jumperMoves.length % 5 == 0) jumperMoves.splice(2, 2)
+    move() {
 
-            if (jumperMoves[i] === 65) {
-                this.posX -= vel
+      this.posY -= this.grty
+
+        if(go == true){
+            if (jumperMove === 65) {
+                this.posX -= this.vel
             }
-            else if (jumperMoves[i] === 68) {
-                this.posX += vel
+
+            else if (jumperMove=== 68) {
+                this.posX += this.vel
             }
         }
-        
+
+          
         
 
     }
@@ -56,40 +57,41 @@ class Jumper {
     // similar sea distinto de 0, no se pueda tocar ningún elemento.
 
     jump() {
-        if (goJump === true) {
-            if (this.power <= maxJump(jumperJump)) {
-                this.posY -= this.vel * 5 // REVISAR Vel + this.vel * x
+
+        if(goJump === true && jumperJump.length > 0){
+            if(this.power <= maxJump(jumperJump) ){
+                this.posY -= this.vel * 5
                 this.posX += this.vel * 2.5 // REVISAR EL ÁNGULO
                 this.power++
-            } else if (this.power > maxJump(jumperJump)) {
+            } else if(this.power > maxJump(jumperJump)){
                 this.power = 1
                 jumperJump = []
                 goJump = false;
-                goDown = true;
+               // goDown = true;
             }
+    
+          }
+        } 
 
-        }
-    }
+        
+    
 
     down() {
-        if (goDown == true) {
-            if (this.posY != this.posY0) {
-                this.posY += this.vel * 2.5
-                this.posX += this.vel / 2
-                this.collision(this.posX, this.posY)
-            } else if (this.posY == this.posY0) {
-                goDown = false;
-            }
-        }
+        
+        
     }
 
     collision(x, y) {
         for (let i = 0; i < numObs; i++) {
-            if (y >= obsY[i] - 116 && y <= (obsY[i]-116 + obsSize2[i])) {
-                if (x >= obsX[i] -90 && x <= (obsX[i] + obsSize1[i])) {
-                    goDown = false;
+            if (y <= obsY[i] - 116 && y >= (obsY[i] - 116 + obsSize2[i])) {
+                //this.stop = 1
+            } else if (y >= obsY[i] - 116 && y <= (obsY[i] - 116 + obsSize2[i])) {
+                if (x >= obsX[i] - 90 && x <= (obsX[i] + obsSize1[i])) {
+                   // goDown = false;
                     this.posY = obsY[i] - 116
+                    //this.stop = 1 
                     this.obsFloor = [obsX[i], obsX[i] + obsSize1[i]] // tamaño de la plataforma
+
                 }
 
             }
@@ -98,11 +100,14 @@ class Jumper {
     }
     // Función para saber cuando deja de estar en la plataforma 
 
-    noFloor(){
-        if(this.posX < this.obsFloor[0] || this.posX > this.obsFloor[1]){
+    noFloor() {
 
+        if (this.posX + 70 < this.obsFloor[0] || this.posX - 70 > this.obsFloor[1]) {
+            console.log(this.posX, this.obsFloor[0])
+            this.stop = 0
+            //goDown == true
             console.log("hola")
-            goDown == true
+
             this.obsFloor = []
             return true
         }

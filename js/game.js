@@ -1,5 +1,6 @@
 let game;
-let jumperMoves = []
+let go = false;
+let jumperMove = undefined;
 let jumperJump = []
 let goJump = false;
 let goDown = false;
@@ -14,8 +15,7 @@ const Game = {
     ctx: undefined,
     width: undefined,
     height: undefined,
-    vel: 6,
-    power: 2,
+    
     // moves: [],
 
 
@@ -53,7 +53,7 @@ const Game = {
     },
 
     move: function () {
-        this.jumper.move(this.vel)
+        this.jumper.move()
         this.jumper.gravity()
     },
 
@@ -70,44 +70,50 @@ function a() {
     function renderizado() {
         window.requestAnimationFrame(renderizado);
         Game.clear()
+        Game.jump()
         Game.drawAll()
         Game.move()
-        Game.jump()
+        
 
 
-        document.addEventListener("keydown", function (e) {
-            if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
-            if (e.keyCode == 65 || e.keyCode == 68) {
-                if (goDown == true) { // Test si se cae de la plataforma
-                    jumperMoves = []
-                } else
-                    jumperMoves.push(e.keyCode) // Movimiento 
-            }
-            else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
-            else { return undefined }
-        })
+    //     document.addEventListener("keydown", function (e) {
+    //         if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
+    //         if (e.keyCode == 65 || e.keyCode == 68) {
+    //             if (goDown == true) { // Test si se cae de la plataforma
+    //                 jumperMoves = []
+    //             } else
+    //                 jumperMoves.push(e.keyCode) // Movimiento 
+    //         }
+    //         else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+    //         else { return undefined }
+    //     })
     }
     window.requestAnimationFrame(renderizado)
 }
 
 // Keyboards
 
-// document.addEventListener("keydown", function (e) {
-//     if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
-//     if (e.keyCode == 65 || e.keyCode == 68) {
-//         if (goDown == true) { // Test si se cae de la plataforma
-//             jumperMoves = []
-//         } else
-//             jumperMoves.push(e.keyCode) // Movimiento 
-//     }
-//     else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
-//     else { return undefined }
-// })
+document.addEventListener("keydown", function (e) {
+    if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
+
+    go = true
+    
+    if (e.keyCode == 65 || e.keyCode == 68) {
+            jumperMove = e.keyCode
+    }
+    else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+    else { return undefined }
+
+})
 
 document.addEventListener("keyup", function (e) {
+    go = false
+
     if (e.keyCode == 32 || e.keyCode == 65 || e.keyCode == 68) {
-        jumperMoves = []
-        goJump = true
+        jumperMove = []
+        goJump = true;
+
+       
     }
 
 })
