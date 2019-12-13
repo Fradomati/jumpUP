@@ -1,8 +1,10 @@
 let w = window.innerWidth;
-let obsX = [w*0.5, w*0.3, w*0.6];
-let obsY = [700, 500, 300];
-let obsSize1 = [100, 75, 200];
-let obsSize2 = [50, 35, 100];
+let h = window.innerHeight;
+let floor = h * 0.99
+let obsX = [0, w*0.5, w*0.3, w*0.6];
+let obsY = [floor, 700, 500, 300];
+let obsSize1 = [w, 100, 75, 200];
+let obsSize2 = [h*0.1, 50, 35, 100];
 let numObs = obsX.length;
 
 
@@ -10,15 +12,6 @@ class Obstacles {
     constructor(ctx) {
         this.ctx = ctx;
 
-
-
-        // this.objs = {
-        //     obj1: {
-        //         x: 400,
-        //         y: 400,
-        //         size: [50, 100]
-        //     }
-        // }
     }
 
     draw() {

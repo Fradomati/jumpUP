@@ -14,6 +14,8 @@ const Game = {
     ctx: undefined,
     width: undefined,
     height: undefined,
+    vel: 6,
+    power: 2,
     // moves: [],
 
 
@@ -43,7 +45,7 @@ const Game = {
         this.background.draw();
         this.jumper.draw();
         this.obstacles.draw();
-        
+
     },
 
     clear: function () {
@@ -51,10 +53,11 @@ const Game = {
     },
 
     move: function () {
-        this.jumper.move()
+        this.jumper.move(this.vel)
+        this.jumper.gravity()
     },
 
-    jump: function() {
+    jump: function () {
         this.jumper.jump()
         this.jumper.down()
     },
@@ -70,30 +73,52 @@ function a() {
         Game.drawAll()
         Game.move()
         Game.jump()
+
+
+        document.addEventListener("keydown", function (e) {
+            if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
+            if (e.keyCode == 65 || e.keyCode == 68) {
+                if (goDown == true) { // Test si se cae de la plataforma
+                    jumperMoves = []
+                } else
+                    jumperMoves.push(e.keyCode) // Movimiento 
+            }
+            else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+            else { return undefined }
+        })
     }
     window.requestAnimationFrame(renderizado)
 }
 
 // Keyboards
 
-document.addEventListener("keydown", function (e) {
-    if (e.keyCode == 65 || e.keyCode == 68) { jumperMoves.push(e.keyCode) }
-    else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+// document.addEventListener("keydown", function (e) {
+//     if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
+//     if (e.keyCode == 65 || e.keyCode == 68) {
+//         if (goDown == true) { // Test si se cae de la plataforma
+//             jumperMoves = []
+//         } else
+//             jumperMoves.push(e.keyCode) // Movimiento 
+//     }
+//     else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+//     else { return undefined }
+// })
 
-})
+document.addEventListener("keyup", function (e) {
+    if (e.keyCode == 32 || e.keyCode == 65 || e.keyCode == 68) {
+        jumperMoves = []
+        goJump = true
+    }
 
-document.addEventListener("keyup", function () {
-    jumperMoves = []
-    goJump = true
 })
 
 
 
 // Functions
 
-function pushJumps(e){
-    for(let i = 0; i < power; i++){jumperJump.push(e)}
-    
+function pushJumps(e) {
+    for (let i = 0; i < power; i++) { jumperJump.push(e) } // el power dice si quiero que me lo mande de 1 en 1 o de 2 en 2 para dar más o menos fuerza.
+
 }
 
 
