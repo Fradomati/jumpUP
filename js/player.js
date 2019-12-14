@@ -15,7 +15,11 @@ class Jumper {
 
         // Medidas de Caida 
 
-        this.vel = 3
+        this.vel = 8
+        this.speedX = 1
+        this.speedY = 1
+
+
         this.up = 20
         this.power = 1
         this.grty = this.vel
@@ -25,7 +29,11 @@ class Jumper {
         this.obsFloor = []
     }
 
-    gravity(a) {
+    draw() {
+        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+    }
+
+    gravity() {
         if (this.posY < this.posY0) {
             this.posY += this.grty * 4
             
@@ -41,27 +49,30 @@ class Jumper {
         console.log("angulo:", this.posX)
     }
 
-    draw() {
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
-    }
+   
 
     move() {
 
-        this.posY -= this.grty
-
+      //  this.posY -= this.grty
+        console.log(go)
         if (go == true) {
-            if (jumperMove === 65) {
-                this.posX -= this.vel * 2
+            if (jumperMove === 65 && this.speedX < this.vel) {
+                this.posX -= this.speedX
+                console.log(this.speedX)
+            this.speedX++
             }
 
-            else if (jumperMove === 68) {
-                this.posX += this.vel * 2
+            else if (jumperMove === 68 && this.speedX < this.vel) {
+                this.posX += this.speedX
+            this.speedX++
             }
         }
 
+    }
 
-
-
+    reset(){
+            this.speedX = 0
+        
     }
 
     // La idea sería crear una función que todo el rato compruebe si está sobre una
@@ -86,7 +97,7 @@ class Jumper {
             }
 
         }
-        this.collision(this.posY, this.posX)
+       // this.collision(this.posY, this.posX)
     }
 
 

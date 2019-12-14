@@ -54,12 +54,13 @@ const Game = {
 
     move: function () {
         this.jumper.move()
-        this.jumper.gravity()
+       // this.jumper.gravity()
+       
     },
 
     jump: function () {
-        this.jumper.jump()
-        this.jumper.down()
+       // this.jumper.jump()
+      //  this.jumper.down()
     },
 
 }
@@ -70,8 +71,8 @@ function a() {
     function renderizado() {
         window.requestAnimationFrame(renderizado);
         Game.clear()
-        Game.jump()
         Game.drawAll()
+        // Game.jump()
         Game.move()
         
 
@@ -108,10 +109,10 @@ document.addEventListener("keydown", function (e) {
 
 document.addEventListener("keyup", function (e) {
     go = false
+    
 
     if ( e.keyCode == 65 || e.keyCode == 68) {
         jumperMove = []
-        
 
        
     } else if( e.keyCode == 32) {
