@@ -49,25 +49,29 @@ class Jumper {
             }
             else if (key == "jump" && jumpUP == false) {
                 jumpUP = true;
-                this.speedY -= 80
+                this.speedY -= 60
             }
         }
 
+        
         this.speedY += this.grty // Simulo gravedad
         this.posX += this.speedX // Movimiento Lateral
         this.posY += this.speedY // Movimiento Vertical
-       // console.log(Math.floor(obsY[0]))
+        // console.log(Math.floor(obsY[0]))
         this.speedX *= 0.9 // Reduce la velocidad progresivamente, Lateral
         this.speedY *= 0.9 // Reduce la velocidad progresivamente, Vertical
 
-    // Detecta si está en la base   
+        // Detecta si está en la base   
 
         if (this.floor() == true) {
-            this.speedY =  0 - this.grty
+            this.speedY = 0 - this.grty
         }
 
-    // Aquí toca hacer una función que compruebe continuamente sobre qué plataforma está.
+        // Aquí toca hacer una función que compruebe continuamente sobre qué plataforma está.
+        this.collision()
         this.floorObs()
+        
+      
         // if (down == true) {
         //     this.speedY =  0 - this.grty
         // }
@@ -75,37 +79,61 @@ class Jumper {
 
     floor() {
         let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
-        
-        if(yBot > Math.floor(obsY[0]) && yBot < Math.floor(obsY[0] + 10)){
+
+        if (yBot > Math.floor(obsY[0]) && yBot < Math.floor(obsY[0] + 10)) {
             return true
         } else {
-            return  false
+            return false
         }
-        
+
     }
 
     floorObs() {
-        let xIzq = Math.floor(this.posX ); //le sumo 20 para que me coja 20px más hacia el centro del Jumper.
-        let xDrc = Math.floor(this.posX +100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.
+        let xIzq = Math.floor(this.posX);
+        let xDrc = Math.floor(this.posX + 100)
         let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
         let yTop = Math.floor(this.posY) // parte de arriba.
         console.log(xIzq, xDrc)
-        
-        for(let x = 1; x < numObs; x++){
-            console.log(x)
-            if(yBot > Math.floor(obsY[x]) && yBot < Math.floor(obsY[x] + 5)){ // Suelo
-                console.log("obstáculo:", obsX[1], obsX[1]+obsSize1[1])
-                if(xDrc > obsX[x]+obsSize1[x] && xIzq > obsX[x]+obsSize1[x] ){ // Si se sale por la drecha, bye bye
+
+        for (let l = 1; l < numObs; l++) {
+
+            if (yBot > Math.floor(obsY[l]) && yBot < Math.floor(obsY[l] + 5)) { // Suelo
+               
+                if (xDrc > obsX[l] + obsSize1[l] && xIzq > obsX[l] + obsSize1[l]) { // Si se sale por la drecha, bye bye
                     this.fall
-                } else if( xDrc < obsX[x] && xIzq < obsX[x]) { // Si se sale por la izquierda.
+                } else if (xDrc < obsX[l] && xIzq < obsX[l]) { // Si se sale por la izquierda.
                     this.fall
                 } else {
-                this.speedY =  0 - this.grty
-            }
-        } else {this.fall}
-    } 
-
+                    this.speedY = 0 - this.grty
+                }
+            } else { this.fall }
+        }
     }
+
+        collision() {
+            let xIzq = Math.floor(this.posX); 7
+            let xDrc = Math.floor(this.posX + 100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.
+            let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
+            let yTop = Math.floor(this.posY)
+
+            // Collision TOP
+            for (let l = 1; l < numObs; l++) {
+                if (yTop < Math.floor(obsY[l] + obsSize2[l]) && yTop > Math.floor(obsY[l])) { // "Techo"
+                   
+                    if (xIzq > obsX[l] && xIzq < obsX[l] + obsSize1[l]) {
+                        console.log(xIzq, "obstáculo:", obsX[l], obsX[l] + obsSize1[l])
+                        //this.speed = 0
+                        this.speedY += this.grty*14
+                        console.log(this.grty)
+                    } else if (xDrc > obsX[l] && xDrc < obsX[l] +obsSize1[l]) {
+                            //this.speed = 0
+                            this.speedY += this.grty*14
+                    }
+                }   
+            }
+    }
+    }
+
         // for (let i = 0; i < numObs; i++) {
 
         //     // ## CHOQUE POR ABAJO ##
@@ -209,7 +237,7 @@ class Jumper {
         // }
 
     
-}
+
 
 
 // Función para potencia de salto

@@ -3,7 +3,7 @@ let game;
 let keyDown = null;
 let key = null;
 let jumpUP = false;
-let down = null;
+
 
 let go = false;
 let jumperMove = undefined;
