@@ -1,4 +1,10 @@
 let game;
+
+let keyDown = null;
+let key = null;
+let jumpUP = false;
+let down = null;
+
 let go = false;
 let jumperMove = undefined;
 let jumperJump = []
@@ -53,10 +59,11 @@ const Game = {
         this.ctx.clearRect(0, 0, this.width, this.height)
     },
 
+
     move: function () {
         this.jumper.move()
       //  this.jumper.gravity()
-        this.jumper.collision()
+      //  this.jumper.collision()
         
        
     },
@@ -75,44 +82,68 @@ function a() {
         window.requestAnimationFrame(renderizado);
         Game.clear()
         Game.drawAll()
-        Game.jump()
+       // Game.jump()
         Game.move()
         
 
      
     }
+    document.addEventListener("keydown", function (e) {
+        keyDown = true
+        switch(e.keyCode){
+            case 65: // Left
+            key = "left"
+            break;
+            case 68: // Right
+            key = "right"
+            break;
+            case 32: // Space
+            key = "jump"
+            break;
+        }
+    })
+    
+    document.addEventListener("keyup",function (e) {
+        keyDown = false;
+        jumpUP = false;
+        key = null;
+    }) 
     window.requestAnimationFrame(renderizado)
 }
 
 // Keyboards
 
-document.addEventListener("keydown", function (e) {
-    if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
 
-    go = true
+
+
+
+// document.addEventListener("keydown", function (e) {
+//     if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
+
+//     go = true
     
-    if (e.keyCode == 65 || e.keyCode == 68) {
+//     if (e.keyCode == 65 || e.keyCode == 68) {
         
-            jumperMove = e.keyCode
-    }
-    else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
-    else { return undefined }
+//             jumperMove = e.keyCode
+//     }
+//     else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
+//     else { return undefined }
 
-})
+// })
 
 
-document.addEventListener("keyup", function (e) {
-    go = false
-    if ( e.keyCode == 65 || e.keyCode == 68) {
-        jumperMove = []
+// document.addEventListener("keyup", function (e) {
+//     go = false
+//     if ( e.keyCode == 65 || e.keyCode == 68) {
+//         jumperMove = []
 
        
-    } else if( e.keyCode == 32) {
-        goJump = true;
+//     } else if( e.keyCode == 32) {
+//         goJump = true;
         
-    }
+//     }
 
-})
+// })
 
 
 
