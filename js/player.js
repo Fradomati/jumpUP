@@ -49,11 +49,12 @@ class Jumper {
             }
             else if (key == "jump" && jumpUP == false) {
                 jumpUP = true;
-                this.speedY -= 60
+                this.speedY -= 80
+                this.speedX += 20
             }
         }
 
-        
+
         this.speedY += this.grty // Simulo gravedad
         this.posX += this.speedX // Movimiento Lateral
         this.posY += this.speedY // Movimiento Vertical
@@ -70,8 +71,8 @@ class Jumper {
         // Aquí toca hacer una función que compruebe continuamente sobre qué plataforma está.
         this.collision()
         this.floorObs()
-        
-      
+
+
         // if (down == true) {
         //     this.speedY =  0 - this.grty
         // }
@@ -93,12 +94,12 @@ class Jumper {
         let xDrc = Math.floor(this.posX + 100)
         let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
         let yTop = Math.floor(this.posY) // parte de arriba.
-        console.log(xIzq, xDrc)
+       
 
         for (let l = 1; l < numObs; l++) {
 
             if (yBot > Math.floor(obsY[l]) && yBot < Math.floor(obsY[l] + 5)) { // Suelo
-               
+
                 if (xDrc > obsX[l] + obsSize1[l] && xIzq > obsX[l] + obsSize1[l]) { // Si se sale por la drecha, bye bye
                     this.fall
                 } else if (xDrc < obsX[l] && xIzq < obsX[l]) { // Si se sale por la izquierda.
@@ -110,29 +111,65 @@ class Jumper {
         }
     }
 
-        collision() {
-            let xIzq = Math.floor(this.posX); 7
-            let xDrc = Math.floor(this.posX + 100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.
-            let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
-            let yTop = Math.floor(this.posY)
+    collision() {
+        let xIzq = Math.floor(this.posX); 7
+        let xDrc = Math.floor(this.posX + 100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.  
+        let yTop = Math.floor(this.posY)
+        let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
 
-            // Collision TOP
-            for (let l = 1; l < numObs; l++) {
-                if (yTop < Math.floor(obsY[l] + obsSize2[l]) && yTop > Math.floor(obsY[l])) { // "Techo"
-                   
-                    if (xIzq > obsX[l] && xIzq < obsX[l] + obsSize1[l]) {
-                        console.log(xIzq, "obstáculo:", obsX[l], obsX[l] + obsSize1[l])
-                        //this.speed = 0
-                        this.speedY += this.grty*14
-                        console.log(this.grty)
-                    } else if (xDrc > obsX[l] && xDrc < obsX[l] +obsSize1[l]) {
-                            //this.speed = 0
-                            this.speedY += this.grty*14
-                    }
-                }   
+
+        // Collision TOP
+        for (let l = 1; l < numObs; l++) {
+            if (yTop < Math.floor(obsY[l] + obsSize2[l]) && yTop > Math.floor(obsY[l])) { // "Techo"
+
+                if (xIzq > obsX[l] && xIzq < obsX[l] + obsSize1[l]) {
+                    //console.log(xIzq, "obstáculo:", obsX[l], obsX[l] + obsSize1[l] + 50)
+                    //this.speed = 0
+                    this.speedY = 0 - this.grty
+                    this.speedY += this.grty * 10
+                    //console.log(this.grty)
+                } else if (xDrc > obsX[l] && xDrc < obsX[l] + obsSize1[l]) {
+                    //this.speed = 0
+                    this.speedY = 0 - this.grty
+                    this.speedY += this.grty * 10
+                }
             }
+        }
+
+        // Collision Left
+
+        for (let l = 1; l < numObs; l++) {
+
+            if (xDrc <= obsX[l]) {    // Lado Izquierdo
+                if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
+                    if (xDrc >= obsX[l] - 5) {
+                        console.log("hola")
+                        this.speedX = 0 - this.grty
+                        this.speedX -= this.grty * 10
+                    }  else  if (yBot > obsY[l] && yBot < obsY[l] + obsSize2[l]) {
+                        if (xDrc >= obsX[l] - 5) {
+                            console.log("adios")
+                            this.speedX = 0 - this.grty
+                            this.speedX -= this.grty * 10
+                        }
+                    }
+                }
+            }
+
+            if (xDrc >= obsX[l] +obsSize1[l]) {    // Lado derecho
+                if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
+                    if (xDrc <= obsX[l] + obsSize1[l] + 5) {
+                        console.log(obsX[l], obsX[l] + obsSize1[l] + 5)
+                        console.log("hola")
+                        this.speedX = 0 - this.grty
+                        this.speedX += this.grty * 10
+
+                    }
+                }
+            }
+        }
     }
-    }
+}
 
         // for (let i = 0; i < numObs; i++) {
 
@@ -236,26 +273,26 @@ class Jumper {
         //     }
         // }
 
-    
 
 
 
-// Función para potencia de salto
 
-function maxJump(a) {
-    console.log("longitud", a.length)
+        // Función para potencia de salto
 
-    if (a.length <= 2) {
-        return 15
-    } else if (a.length >= 3 && a.length <= 45) {
-        return 25
-    } else if (a.length >= 56 && a.length <= 80) {
-        return 30
-    } else if (a.length >= 81) {
-        return 35
-    }
+        function maxJump(a) {
+            console.log("longitud", a.length)
 
-}
+            if (a.length <= 2) {
+                return 15
+            } else if (a.length >= 3 && a.length <= 45) {
+                return 25
+            } else if (a.length >= 56 && a.length <= 80) {
+                return 30
+            } else if (a.length >= 81) {
+                return 35
+            }
+
+        }
 
 // Función para saber cuando deja de estar en la plataforma 
 
