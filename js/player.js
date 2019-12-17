@@ -42,15 +42,22 @@ class Jumper {
     move() {
         if (keyDown === true) {
             if (key == "left") {
+                face = "left"
                 this.speedX -= 1
             }
             else if (key == "right") {
+                face = "right"
                 this.speedX += 1
             }
             else if (key == "jump" && jumpUP == false) {
                 jumpUP = true;
                 this.speedY -= 80
-                this.speedX += 20
+                if(face === "right"){
+                    this.speedX += 20
+                } else {
+                    this.speedX -= 20
+                }
+            
             }
         }
 
@@ -76,6 +83,10 @@ class Jumper {
         // if (down == true) {
         //     this.speedY =  0 - this.grty
         // }
+    }
+
+    animate(){
+        
     }
 
     floor() {
