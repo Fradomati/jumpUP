@@ -5,7 +5,9 @@ class Jumper {
         this.height = height;
 
         this.image = new Image();
-        this.image.src = "img/idle_1.png";
+        this.image.src = "img/Zombies.png"
+
+        //this.image.src = "img/idle_1.png";
 
 
         this.posX = canvasWidth / 2 - height / 2;
@@ -27,7 +29,8 @@ class Jumper {
     }
 
     draw() {
-        this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+        //this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+        this.ctx.drawImage(this.image, 0+(100*animateCounter), direction, 100, 100, this.posX, this.posY, this.width, this.height);
     }
 
 
@@ -74,6 +77,7 @@ class Jumper {
         if (this.floor() == true) {
             this.speedY = 0 - this.grty
         }
+        
 
         // Aquí toca hacer una función que compruebe continuamente sobre qué plataforma está.
         this.collision()

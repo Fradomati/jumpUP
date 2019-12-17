@@ -3,6 +3,8 @@ let game;
 let keyDown = null;
 let key = null;
 let jumpUP = false;
+let animateCounter = 0
+let direction = 105
 
 
 let go = false;
@@ -44,7 +46,7 @@ const Game = {
 
     createGame: function () {
         this.background = new Background(this.ctx, this.width, this.height)
-        this.jumper = new Jumper(this.ctx, 100, 116, this.width, this.height)
+        this.jumper = new Jumper(this.ctx, 100, 100, this.width, this.height)
         this.obstacles = new Obstacles(this.ctx);
     },
 
@@ -92,10 +94,14 @@ function a() {
         keyDown = true
         switch(e.keyCode){
             case 65: // Left
+            direction = 0 // Pj face left
             key = "left"
+            animateCount()
             break;
             case 68: // Right
+            direction = 105 // Pj face right
             key = "right"
+            animateCount()
             break;
             case 32: // Space
             key = "jump"
@@ -109,6 +115,14 @@ function a() {
         key = null;
     }) 
     window.requestAnimationFrame(renderizado)
+}
+
+
+function animateCount(){
+    animateCounter++
+    if(animateCounter == 6){
+        animateCounter = 0
+    } 
 }
 
 // Keyboards
