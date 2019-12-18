@@ -1,3 +1,6 @@
+let testY = null;
+
+
 class Jumper {
     constructor(ctx, width, height, canvasWidth, canvasHeight) {
         this.ctx = ctx;
@@ -31,6 +34,7 @@ class Jumper {
     draw() {
         //this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
         this.ctx.drawImage(this.image, 0+(100*animateCounter), direction, 100, 100, this.posX, this.posY, this.width, this.height);
+        testY = this.posY;
     }
 
 
@@ -38,6 +42,31 @@ class Jumper {
     angulo() {
         this.posX += this.distance
         console.log("angulo:", this.posX)
+    }
+
+
+    phases(){
+
+        if(this.posY <= 200 && imFloor == "yes" && phase == 1){
+            phase = 2
+            console.log("Ya está aquí la phase 2")
+            this.animate()
+        } else if(this.posY <= 200 && imFloor == "yes" && phase == 2) {
+            phase = 3
+          
+        } else if(this.posY <= 200 && imFloor == "yes" && phase == 3){
+            console.log("Victory!")
+        } else if(this.posY > h && phase == 3) {
+            phase = 2
+           
+            
+        } else if(this.posY > h && phase == 2) {
+            phase = 1
+           
+           
+        }
+
+
     }
 
 
@@ -54,7 +83,8 @@ class Jumper {
             }
             else if (key == "jump" && jumpUP == false) {
                 jumpUP = true;
-                this.speedY -= 80
+                imFloor = "no" // ya no está en la plataforma
+                this.speedY -= 30
                 if(face === "right"){
                     this.speedX += 20
                 } else {
@@ -80,8 +110,9 @@ class Jumper {
         
 
         // Aquí toca hacer una función que compruebe continuamente sobre qué plataforma está.
-        this.collision()
         this.floorObs()
+        this.collision()
+      
 
 
         // if (down == true) {
@@ -90,51 +121,116 @@ class Jumper {
     }
 
     animate(){
-        
+        this.posY = this.posY + 300
+            imFloor = "no"
+            console.log(jumpUP)
     }
 
     floor() {
-        let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
+        if(phase == 1) {
+
+        
+
+        let yBot = Math.floor(this.posY + 105) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
 
         if (yBot > Math.floor(obsY[0]) && yBot < Math.floor(obsY[0] + 10)) {
+            console.log("hola")
             return true
         } else {
             return false
         }
 
+     } else if(this.posY > h && phase == 3) { // Caída y salida por arriba
+        this.posY = 0
+        phase = 2
+        console.log(phase)
+        
+    } else if(this.posY > h && phase == 2) { // Caída y salida por arriba, vuelta a fase 1
+        this.posY = 0
+        phase = 1
+        console.log(phase)
+       
+    }
+
     }
 
     floorObs() {
+      
+        let l = 1
+        let num = 5
         let xIzq = Math.floor(this.posX);
         let xDrc = Math.floor(this.posX + 100)
         let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
         let yTop = Math.floor(this.posY) // parte de arriba.
+
+        if(phase == 1){
+            l = 1
+            num = 6
+
+        } else if (phase == 2) {
+
+            
+            l = 6
+            l = 8
+        } else if (phase == 3){
+            l = 8
+            l = 15
+        }
        
 
-        for (let l = 1; l < numObs; l++) {
-
+        for (l; l < num; l++) {
+            
             if (yBot > Math.floor(obsY[l]) && yBot < Math.floor(obsY[l] + 5)) { // Suelo
 
                 if (xDrc > obsX[l] + obsSize1[l] && xIzq > obsX[l] + obsSize1[l]) { // Si se sale por la drecha, bye bye
-                    this.fall
+                    
+                    imFloor = "no"
+                    this.fall              
+                               
                 } else if (xDrc < obsX[l] && xIzq < obsX[l]) { // Si se sale por la izquierda.
+                    imFloor = "no"
                     this.fall
+                    
                 } else {
+                    if(this.posY <= 200){
+                        imFloor = "yes" // Certifico que está sobre la plataforma superior para el cambio de fase
+                    }
+                    console.log("hola", l)
                     this.speedY = 0 - this.grty
                 }
-            } else { this.fall }
+            } else { 
+                this.fall }
+                
         }
-    }
+    
+
+}
 
     collision() {
+
+       
+        let l = 0
+        let num = 5
         let xIzq = Math.floor(this.posX); 7
         let xDrc = Math.floor(this.posX + 100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.  
         let yTop = Math.floor(this.posY)
         let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
 
+        if(phase == 1){
+            l = 1
+            num = 6
+            console.log(l)
 
+        } else if (phase == 2) {
+            l = 7
+            l = 10
+        } else if (phase == 3){
+            l = 8
+            l = 15
+        }
+       
         // Collision TOP
-        for (let l = 1; l < numObs; l++) {
+        for (l; l < num; l++) {
             if (yTop < Math.floor(obsY[l] + obsSize2[l]) && yTop > Math.floor(obsY[l])) { // "Techo"
 
                 if (xIzq > obsX[l] && xIzq < obsX[l] + obsSize1[l]) {

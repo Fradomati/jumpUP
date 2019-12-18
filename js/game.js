@@ -4,7 +4,9 @@ let keyDown = null;
 let key = null;
 let jumpUP = false;
 let animateCounter = 0
-let direction = 105
+let direction = 105 // Face Right
+let phase = 1
+let imFloor = "no"
 
 
 let go = false;
@@ -52,6 +54,7 @@ const Game = {
 
     drawAll: function () {
         this.background.draw();
+        this.jumper.phases();
         this.jumper.draw();
         this.obstacles.draw();
 
@@ -64,6 +67,7 @@ const Game = {
 
     move: function () {
         this.jumper.move()
+        
       //  this.jumper.gravity()
       //  this.jumper.collision()
         
@@ -94,7 +98,7 @@ function a() {
         keyDown = true
         switch(e.keyCode){
             case 65: // Left
-            direction = 0 // Pj face left
+            direction = 0   // Pj face left
             key = "left"
             animateCount()
             break;
