@@ -15,8 +15,8 @@ class Jumper {
 
         this.posX = canvasWidth / 2 - height / 2;
 
-        this.posY0 = canvasHeight * 0.970 - width;
-        this.posY = canvasHeight * 0.970 - width;
+        this.posY0 = canvasHeight * 0.96 - width;
+        this.posY = canvasHeight * 0.96 - width;
 
         // Movimiento
 
