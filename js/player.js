@@ -47,14 +47,15 @@ class Jumper {
 
     phases(){
 
-        if(this.posY <= 200 && imFloor == "yes" && phase == 1){
+        if(this.posY <= 150 && imFloor == "yes" && phase == 1){
             phase = 2
            
-            this.animate()
-        } else if(this.posY <= 200 && imFloor == "yes" && phase == 2) {
+            this.changePhase()
+        } else if(this.posY <= 150 && imFloor == "yes" && phase == 2) {
             phase = 3
+            this.changePhase()
           
-        } else if(this.posY <= 200 && imFloor == "yes" && phase == 3){
+        } else if(this.posY <= 150 && imFloor == "yes" && phase == 3){
             console.log("Victory!")
          } // else if(this.posY > h && phase == 3) {
         //     phase = 2
@@ -130,9 +131,9 @@ class Jumper {
         // }
     }
 
-    animate(){
+    changePhase(){
         imFloor = "no"
-        this.posY = this.posY + 300
+        this.posY = this.posY + 700
             
     
     }
@@ -176,8 +177,8 @@ class Jumper {
         let yTop = Math.floor(this.posY) // parte de arriba.
         
         if(phase == 1){
-            l = 1
-            num = 6
+            l = 20 // p1 = 1 - 10 / p2 = 10 - 20 / 20 - 30 
+            num = 30 // CAMBIAR!!!!!!!
 
         } else if (phase == 2) {
 
@@ -236,8 +237,8 @@ class Jumper {
         let yBot = Math.floor(this.posY + 100) // le resto 116 para que cuente desde la parte de abajo del Jumper.
 
         if(phase == 1){
-            l = 1
-            num = 6
+            l = 20 // p1 = 1 - 10 / p2 = 10 - 20 / 
+            num = 30// CAMBIAR!!!!!!!
          
 
         } else if (phase == 2) {
@@ -266,7 +267,7 @@ class Jumper {
             }
         }
 
-        // Collision Left
+        // Collision Left   
 
         // for (let l = 1; l < numObs; l++) {
 
