@@ -57,15 +57,7 @@ class Jumper {
           
         } else if(this.posY <= 150 && imFloor == "yes" && phase == 3){
             console.log("Victory!")
-         } // else if(this.posY > h && phase == 3) {
-        //     phase = 2
-           
-            
-        // } else if(this.posY > h && phase == 2) {
-        //     phase = 1
-           
-           
-        // }
+         } 
 
 
     }
@@ -126,9 +118,7 @@ class Jumper {
       
         
 
-        // if (down == true) {
-        //     this.speedY =  0 - this.grty
-        // }
+       
     }
 
     changePhase(){
@@ -173,21 +163,21 @@ class Jumper {
         let num = 5
         let xIzq = Math.floor(this.posX + 25);
         let xDrc = Math.floor(this.posX + 65)
-        let yBot = Math.floor(this.posY + 100) // le resto 116 para que cuente desde la parte de abajo del Jumper.
-        let yTop = Math.floor(this.posY) // parte de arriba.
+        let yBot = Math.floor(this.posY + 100) 
+        let yTop = Math.floor(this.posY) 
         
         if(phase == 1){
-            l = 20 // p1 = 1 - 10 / p2 = 10 - 20 / 20 - 30 
-            num = 30 // CAMBIAR!!!!!!!
+            l = 1
+            num = 10 
 
         } else if (phase == 2) {
 
             
-            l = 6
-            num = 7
+            l = 10
+            num = 20
         } else if (phase == 3){
-            l = 8
-            num = 15
+            l = 20
+            num = 30
         }
        
 
@@ -232,21 +222,21 @@ class Jumper {
         let l = 0
         let num = 5
         let xIzq = Math.floor(this.posX +25); 
-        let xDrc = Math.floor(this.posX + 65)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.  
+        let xDrc = Math.floor(this.posX + 65)    
         let yTop = Math.floor(this.posY)
-        let yBot = Math.floor(this.posY + 100) // le resto 116 para que cuente desde la parte de abajo del Jumper.
+        let yBot = Math.floor(this.posY + 100) 
 
         if(phase == 1){
-            l = 20 // p1 = 1 - 10 / p2 = 10 - 20 / 
-            num = 30// CAMBIAR!!!!!!!
+            l = 1 
+            num = 10
          
 
         } else if (phase == 2) {
-            l = 7
             l = 10
+            num = 20
         } else if (phase == 3){
-            l = 8
-            l = 15
+            l = 20
+            num = 30
         }
        
         // Collision TOP
@@ -330,5 +320,5 @@ class Jumper {
 
         }
 
-// Función para saber cuando deja de estar en la plataforma 
+
 
