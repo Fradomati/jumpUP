@@ -1,7 +1,7 @@
 let w = window.innerWidth;
 let h = window.innerHeight;
 let floor = h * 0.98
-let obsX = [0, w*0.2, w*0.3, w*0.6, w*0.35, w*0.45, w*0.4, w*0.6]; // Inicio del elemento, izq a drcha
+let obsX = [0, w*0.2, w*0.3, w*0.6, w*0.35, w*0.5, w*0.4, w*0.6]; // Inicio del elemento, izq a drcha
 let obsY = [floor, 850, 650, 400, 500, 195, 850, 700]; // Inicio de la altura, Arriba a bajo
 let obsSize1 = [w, 100, 75, 200, 200, 230, 230, 100]; // Final del elemento, derecha
 let obsSize2 = [500, 50, 50, 50, 50, 50, 50, 50]; // Final del elemento, abajo.

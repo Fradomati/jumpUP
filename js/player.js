@@ -41,7 +41,7 @@ class Jumper {
 
     angulo() {
         this.posX += this.distance
-        console.log("angulo:", this.posX)
+       
     }
 
 
@@ -49,7 +49,7 @@ class Jumper {
 
         if(this.posY <= 200 && imFloor == "yes" && phase == 1){
             phase = 2
-            console.log("Ya está aquí la phase 2")
+           
             this.animate()
         } else if(this.posY <= 200 && imFloor == "yes" && phase == 2) {
             phase = 3
@@ -108,7 +108,7 @@ class Jumper {
         this.speedY += this.grty // Simulo gravedad
         this.posX += this.speedX // Movimiento Lateral
         this.posY += this.speedY // Movimiento Vertical
-        // console.log(Math.floor(obsY[0]))
+      
         this.speedX *= 0.9 // Reduce la velocidad progresivamente, Lateral
         this.speedY *= 0.9// Reduce la velocidad progresivamente, Vertical
 
@@ -134,7 +134,7 @@ class Jumper {
         imFloor = "no"
         this.posY = this.posY + 300
             
-            console.log(jumpUP)
+    
     }
 
     floor() {
@@ -166,14 +166,15 @@ class Jumper {
     }
 
     floorObs() {
+        
       
         let l = 1
         let num = 5
-        let xIzq = Math.floor(this.posX);
-        let xDrc = Math.floor(this.posX + 100)
-        let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
+        let xIzq = Math.floor(this.posX + 25);
+        let xDrc = Math.floor(this.posX + 65)
+        let yBot = Math.floor(this.posY + 100) // le resto 116 para que cuente desde la parte de abajo del Jumper.
         let yTop = Math.floor(this.posY) // parte de arriba.
-
+        
         if(phase == 1){
             l = 1
             num = 6
@@ -191,8 +192,8 @@ class Jumper {
 
         for (l; l < num; l++) {
             
-            if (yBot > Math.floor(obsY[l]) && yBot < Math.floor(obsY[l] + 5)) { // Suelo
-                console.log("llamas a la function obsfloor")
+            if (yBot <= obsY[l] + 15 && yBot >= obsY[l] - 5) { // Suelo
+                console.log(this.posY, yBot, obsY[l])
                 if (xDrc > obsX[l] + obsSize1[l] && xIzq > obsX[l] + obsSize1[l]) { // Si se sale por la drecha, bye bye
                     
                     imFloor = "no"
@@ -229,15 +230,15 @@ class Jumper {
        
         let l = 0
         let num = 5
-        let xIzq = Math.floor(this.posX); 7
-        let xDrc = Math.floor(this.posX + 100)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.  
+        let xIzq = Math.floor(this.posX +25); 
+        let xDrc = Math.floor(this.posX + 65)  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.  
         let yTop = Math.floor(this.posY)
-        let yBot = Math.floor(this.posY + 116) // le resto 116 para que cuente desde la parte de abajo del Jumper.
+        let yBot = Math.floor(this.posY + 100) // le resto 116 para que cuente desde la parte de abajo del Jumper.
 
         if(phase == 1){
             l = 1
             num = 6
-            console.log(l)
+         
 
         } else if (phase == 2) {
             l = 7
@@ -252,7 +253,7 @@ class Jumper {
             if (yTop < Math.floor(obsY[l] + obsSize2[l]) && yTop > Math.floor(obsY[l])) { // "Techo"
 
                 if (xIzq > obsX[l] && xIzq < obsX[l] + obsSize1[l]) {
-                    //console.log(xIzq, "obstáculo:", obsX[l], obsX[l] + obsSize1[l] + 50)
+                    
                     //this.speed = 0
                     this.speedY = 0 - this.grty
                     this.speedY += this.grty * 10
@@ -267,35 +268,35 @@ class Jumper {
 
         // Collision Left
 
-        for (let l = 1; l < numObs; l++) {
+        // for (let l = 1; l < numObs; l++) {
 
-            if (xDrc <= obsX[l]) {    // Lado Izquierdo
-                if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
-                    if (xDrc >= obsX[l] - 5) {
+        //     if (xDrc <= obsX[l]) {    // Lado Izquierdo
+        //         if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]-10) {
+        //             if (xDrc >= obsX[l] - 5) {
                        
-                        this.speedX = 0 - this.grty
-                        this.speedX -= this.grty * 10
-                    }  else  if (yBot > obsY[l] && yBot < obsY[l] + obsSize2[l]) {
-                        if (xDrc >= obsX[l] - 5) {
+        //                 this.speedX = 0 - this.grty
+        //                 this.speedX -= this.grty * 10
+        //             }  else  if (yBot > obsY[l] && yBot < obsY[l] + obsSize2[l]) {
+        //                 if (xDrc >= obsX[l] - 5) {
                          
-                            this.speedX = 0 - this.grty
-                            this.speedX -= this.grty * 10
-                        }
-                    }
-                }
-            }
+        //                     this.speedX = 0 - this.grty
+        //                     this.speedX -= this.grty * 10
+        //                 }
+        //             }
+        //         }
+        //     }
 
-            if (xDrc >= obsX[l] +obsSize1[l]) {    // Lado derecho
-                if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
-                    if (xDrc <= obsX[l] + obsSize1[l] + 5) {
+        //     if (xDrc >= obsX[l] +obsSize1[l]) {    // Lado derecho
+        //         if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
+        //             if (xDrc <= obsX[l] + obsSize1[l] + 5) {
                        
-                        this.speedX = 0 - this.grty
-                        this.speedX += this.grty * 10
+        //                 this.speedX = 0 - this.grty
+        //                 this.speedX += this.grty * 10
 
-                    }
-                }
-            }
-        }
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
 
@@ -306,7 +307,7 @@ class Jumper {
         // Función para potencia de salto
 
         function maxJump(a) {
-            console.log("longitud", a.length)
+         
 
             if (a.length <= 2) {
                 power = 5
