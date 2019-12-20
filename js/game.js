@@ -7,14 +7,16 @@ let animateCounter = 0
 let direction = 105 // Face Right
 let phase = 1
 let imFloor = "no"
+let power = 15;
+let jumperJump = []
 
 
 let go = false;
 let jumperMove = undefined;
-let jumperJump = []
+
 let goJump = false;
 let goDown = false;
-let power = 2;
+
 let face = "right"
 
 /*
@@ -108,15 +110,19 @@ function a() {
             animateCount()
             break;
             case 32: // Space
-            key = "jump"
+            jumperJump.push(1)
             break;
         }
     })
     
     document.addEventListener("keyup",function (e) {
+        if(e.keyCode == 32){
+            key = "jump"
+        } else {
+            
+            key = null;
+        }
         keyDown = false;
-        jumpUP = false;
-        key = null;
     }) 
     window.requestAnimationFrame(renderizado)
 }

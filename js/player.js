@@ -22,8 +22,8 @@ class Jumper {
 
         this.speedY = 0;
         this.speedX = 0;
-        this.grty = 0.5
-        this.fall = this.speedY += this.grty
+        this.grty = 0.8 // antes estaba a 0.5   
+        this.fall = this.speedY += this.grty * 5
 
         this.distance = 5
         this.stop = 1
@@ -72,6 +72,10 @@ class Jumper {
 
 
     move() {
+
+        if(this.speedY == -(this.grty)){ // evito que pueda moverse una vez hecho el salto.
+
+        
         if (keyDown === true) {
             if (key == "left") {
                 face = "left"
@@ -81,18 +85,24 @@ class Jumper {
                 face = "right"
                 this.speedX += 1
             }
-            else if (key == "jump" && jumpUP == false) {
+        } else if( keyDown == false && key == "jump") {
+
                 jumpUP = true;
                 imFloor = "no" // ya no está en la plataforma
-                this.speedY -= 30
+
+                maxJump(jumperJump)
+                this.speedY -= 4 * power
+              
                 if(face === "right"){
-                    this.speedX += 20
+                    this.speedX += 2 * power
                 } else {
-                    this.speedX -= 20
+                    this.speedX -= 2 * power
                 }
-            
+             key = null;
+             jumperJump = []
             }
         }
+    
 
 
         this.speedY += this.grty // Simulo gravedad
@@ -100,7 +110,7 @@ class Jumper {
         this.posY += this.speedY // Movimiento Vertical
         // console.log(Math.floor(obsY[0]))
         this.speedX *= 0.9 // Reduce la velocidad progresivamente, Lateral
-        this.speedY *= 0.9 // Reduce la velocidad progresivamente, Vertical
+        this.speedY *= 0.9// Reduce la velocidad progresivamente, Vertical
 
         // Detecta si está en la base   
 
@@ -113,7 +123,7 @@ class Jumper {
         this.floorObs()
         this.collision()
       
-
+        
 
         // if (down == true) {
         //     this.speedY =  0 - this.grty
@@ -187,11 +197,13 @@ class Jumper {
                     
                     imFloor = "no"
                     this.fall  
+                  
                             
                                
                 } else if (xDrc < obsX[l] && xIzq < obsX[l]) { // Si se sale por la izquierda.
                     imFloor = "no"
                     this.fall
+                   
                     
                     
                 } else {
@@ -204,7 +216,7 @@ class Jumper {
                 }
             } else { 
                 this.fall 
-           
+                
             }
                 
         }
@@ -287,108 +299,6 @@ class Jumper {
     }
 }
 
-        // for (let i = 0; i < numObs; i++) {
-
-        //     // ## CHOQUE POR ABAJO ##
-
-        //     // 1º Compruebo a la altura de qué elemento está
-        //     if (yBot <= obsY[i] ){
-        //         console.log("OBSTÁCULO!")
-        //       //  this.posY = obsY[i] -116
-        //         return true
-        //     }
-        //     // if(xIzq < obsX[i] || xDrc > obsX[i]+obsSize1[i]){
-
-        // }
-
-        // La idea sería crear una función que todo el rato compruebe si está sobre una
-        // plataforma, de manera que si deja de estar, la Vel se ponga positiva y el 
-        // bicho caiga hasta que toque una plataforma, y que mientras la Vel o algo
-        // similar sea distinto de 0, no se pueda tocar ningún elemento.
-
-        // jump() {
-        //     //console.log(jumperJump)
-        //    // console.log(this.power)
-        //    maxJump(jumperJump)
-        //     if(goJump === true){
-
-        //         if(this.speedY < maxJump(jumperJump)){
-        //             this.speedY++
-        //            console.log( this.speedY)
-        //         }  else if (this.speedY >= maxJump(jumperJump)){
-        //             jumperJump = []
-        //             this.speedY = 0
-        //             goJump = false
-        //         }
-
-
-
-        //     }
-
-        // }
-        // // this.collision(this.posY, this.posX)
-        //  }
-
-
-
-
-        // down() {
-        //     return 0
-        // }
-
-        // gravity() {
-        //    let x = this.posX;
-        //    let y = this.posY;
-
-        //     for (let i = 0; i < numObs; i++) {
-        //         if (y <= obsY[i] - 116 && y >= (obsY[i] - 116 + obsSize2[i])) { // Esto sería si golpease por abajo
-        //             //this.stop = 1
-        //         } else if (y >= obsY[i] - 116 && y <= (obsY[i] - 116 + obsSize2[i])) { // Significa que viene de arriba, cayendo
-        //             if (x >= obsX[i] - 90 && x <= (obsX[i] + obsSize1[i])) { // Aquí me mide si cae entre los valores de un cuadro
-        //                 this.posY = obsY[i] - 116
-        //                 //this.stop = 1 
-        //                 this.obsFloor = [obsX[i], obsX[i] + obsSize1[i]] // tamaño de la plataforma
-        //             }
-
-        //         }
-        //     }
-
-        // }
-        // Función para saber cuando deja de estar en la plataforma 
-
-        // collision() {
-        //     let xIzq = this.posX + 20; //le sumo 20 para que me coja 20px más hacia el centro del Jumper.
-        //     let xDrc = this.posx + 80  // le sumo 80 para que me coja 89px más hacia el centro desde la derecha.
-        //     let yBot = this.posY - 166; // le resto 116 para que cuente desde la parte de abajo del Jumper.
-        //     let yTop = this.posY // parte de arriba.
-
-        //     for (let i = 0; i < numObs; i++) {
-
-        //     // ## CHOQUE POR ABAJO ##
-
-        //        // 1º Compruebo a la altura de qué elemento está
-        //         if(yBot >= obsY[i]) {
-        //             console.log("OBSTÁCULO!")
-        //             if(xIzq < obsX[i] || xDrc > obsX[i]+obsSize1[i]){
-        //                 //this.posY = obsX[i]
-        //             }
-        //         }
-        //         // Compruebo que esté entre el principio y el final de un obs.
-
-        //     }
-        // }
-
-        //     if (this.posX + 70 < this.obsFloor[0] || this.posX - 70 > this.obsFloor[1]) {
-        //         console.log(this.posX, this.obsFloor[0])
-        //         this.stop = 0
-        //         //goDown == true
-        //         console.log("hola")
-
-        //         this.obsFloor = []
-        //         return true
-        //     }
-        // }
-
 
 
 
@@ -399,14 +309,22 @@ class Jumper {
             console.log("longitud", a.length)
 
             if (a.length <= 2) {
-                return 15
-            } else if (a.length >= 3 && a.length <= 45) {
-                return 25
-            } else if (a.length >= 56 && a.length <= 80) {
-                return 30
-            } else if (a.length >= 81) {
-                return 35
-            }
+                power = 5
+            } else if (a.length >= 3 && a.length <= 5 ) {
+                power = 7
+            } else if (a.length >= 6 && a.length <= 10 ) {
+                power = 8 
+            } else if (a.length >= 11 && a.length <= 14 ) {
+                power = 9 
+            } else if (a.length >= 15 && a.length <= 18 ) {
+                power = 10 
+            } else if (a.length >= 19 && a.length <= 22 ) {
+                power = 11 
+            } else if (a.length >= 23 && a.length <= 25 ) {
+                power = 12
+            } else if (a.length >= 26) {
+                power = 15
+            } 
 
         }
 
