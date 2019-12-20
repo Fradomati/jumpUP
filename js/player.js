@@ -56,15 +56,15 @@ class Jumper {
           
         } else if(this.posY <= 200 && imFloor == "yes" && phase == 3){
             console.log("Victory!")
-        } else if(this.posY > h && phase == 3) {
-            phase = 2
+         } // else if(this.posY > h && phase == 3) {
+        //     phase = 2
            
             
-        } else if(this.posY > h && phase == 2) {
-            phase = 1
+        // } else if(this.posY > h && phase == 2) {
+        //     phase = 1
            
            
-        }
+        // }
 
 
     }
@@ -121,8 +121,9 @@ class Jumper {
     }
 
     animate(){
+        imFloor = "no"
         this.posY = this.posY + 300
-            imFloor = "no"
+            
             console.log(jumpUP)
     }
 
@@ -134,7 +135,7 @@ class Jumper {
         let yBot = Math.floor(this.posY + 105) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
 
         if (yBot > Math.floor(obsY[0]) && yBot < Math.floor(obsY[0] + 10)) {
-            console.log("hola")
+            
             return true
         } else {
             return false
@@ -143,12 +144,12 @@ class Jumper {
      } else if(this.posY > h && phase == 3) { // Caída y salida por arriba
         this.posY = 0
         phase = 2
-        console.log(phase)
+       
         
     } else if(this.posY > h && phase == 2) { // Caída y salida por arriba, vuelta a fase 1
         this.posY = 0
         phase = 1
-        console.log(phase)
+       
        
     }
 
@@ -171,35 +172,40 @@ class Jumper {
 
             
             l = 6
-            l = 8
+            num = 7
         } else if (phase == 3){
             l = 8
-            l = 15
+            num = 15
         }
        
 
         for (l; l < num; l++) {
             
             if (yBot > Math.floor(obsY[l]) && yBot < Math.floor(obsY[l] + 5)) { // Suelo
-
+                console.log("llamas a la function obsfloor")
                 if (xDrc > obsX[l] + obsSize1[l] && xIzq > obsX[l] + obsSize1[l]) { // Si se sale por la drecha, bye bye
                     
                     imFloor = "no"
-                    this.fall              
+                    this.fall  
+                            
                                
                 } else if (xDrc < obsX[l] && xIzq < obsX[l]) { // Si se sale por la izquierda.
                     imFloor = "no"
                     this.fall
                     
+                    
                 } else {
                     if(this.posY <= 200){
                         imFloor = "yes" // Certifico que está sobre la plataforma superior para el cambio de fase
                     }
-                    console.log("hola", l)
+                  
                     this.speedY = 0 - this.grty
+                   
                 }
             } else { 
-                this.fall }
+                this.fall 
+           
+            }
                 
         }
     
@@ -254,12 +260,12 @@ class Jumper {
             if (xDrc <= obsX[l]) {    // Lado Izquierdo
                 if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
                     if (xDrc >= obsX[l] - 5) {
-                        console.log("hola")
+                       
                         this.speedX = 0 - this.grty
                         this.speedX -= this.grty * 10
                     }  else  if (yBot > obsY[l] && yBot < obsY[l] + obsSize2[l]) {
                         if (xDrc >= obsX[l] - 5) {
-                            console.log("adios")
+                         
                             this.speedX = 0 - this.grty
                             this.speedX -= this.grty * 10
                         }
@@ -270,8 +276,7 @@ class Jumper {
             if (xDrc >= obsX[l] +obsSize1[l]) {    // Lado derecho
                 if (yBot > obsY[l] + 5 && yBot < obsY[l] + obsSize2[l]) {
                     if (xDrc <= obsX[l] + obsSize1[l] + 5) {
-                        console.log(obsX[l], obsX[l] + obsSize1[l] + 5)
-                        console.log("hola")
+                       
                         this.speedX = 0 - this.grty
                         this.speedX += this.grty * 10
 

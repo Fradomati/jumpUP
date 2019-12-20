@@ -26,7 +26,7 @@ class Obstacles {
             num = 6
         } else if(phase == 2){
             p = 6
-            num = 10
+            num = 7
         }
             for (p; p < num; p++) {
            
