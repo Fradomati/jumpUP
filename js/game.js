@@ -19,9 +19,7 @@ let goDown = false;
 
 let face = "right"
 
-/*
-let delta = 0;
-let last = 0; */
+
 
 const Game = {
     canvas: undefined,
@@ -29,7 +27,7 @@ const Game = {
     width: undefined,
     height: undefined,
     
-    // moves: [],
+    
 
 
     fps: 60,
@@ -70,15 +68,14 @@ const Game = {
     move: function () {
         this.jumper.move()
         
-      //  this.jumper.gravity()
-      //  this.jumper.collision()
+  
         
        
     },
 
     jump: function () {
        this.jumper.jump()
-      //  this.jumper.down()
+      
     },
 
 }
@@ -90,7 +87,6 @@ function a() {
         window.requestAnimationFrame(renderizado);
         Game.clear()
         Game.drawAll()
-       // Game.jump()
         Game.move()
         
 
@@ -135,39 +131,6 @@ function animateCount(){
     } 
 }
 
-// Keyboards
-
-
-
-
-
-// document.addEventListener("keydown", function (e) {
-//     if (goDown == true) return undefined // Aquí evito que pueda moverse cayendo.
-
-//     go = true
-    
-//     if (e.keyCode == 65 || e.keyCode == 68) {
-        
-//             jumperMove = e.keyCode
-//     }
-//     else if (e.keyCode == 32) { pushJumps(e.keyCode)  /*jumperJump.push(e.keyCode).repeat(2)*/ }
-//     else { return undefined }
-
-// })
-
-
-// document.addEventListener("keyup", function (e) {
-//     go = false
-//     if ( e.keyCode == 65 || e.keyCode == 68) {
-//         jumperMove = []
-
-       
-//     } else if( e.keyCode == 32) {
-//         goJump = true;
-        
-//     }
-
-// })
 
 
 
@@ -186,43 +149,3 @@ function pushJumps(e) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-class Game {
-    constructor(){
-        this.canvas = document.getElementById('canvas');
-        this.ctx = this.canvas.getContext('2d');
-        this.width = 1500;
-        this.height = 1000;
-        this.start()
-        //this.background = new Background(this.ctx, this.width, this.height)
-
-    }
-
-
-    start() {
-        this.createGame()
-
-        this.drawAll();
-    }
-
-    createGame(){
-        this.background = new Background(this.ctx, this.width, this.height)
-    }
-
-    drawAll(){
-        this.background.draw();
-    }
-} */

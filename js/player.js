@@ -32,7 +32,7 @@ class Jumper {
     }
 
     draw() {
-        //this.ctx.drawImage(this.image, this.posX, this.posY, this.width, this.height)
+       
         this.ctx.drawImage(this.image, 0+(100*animateCounter), direction, 100, 100, this.posX, this.posY, this.width, this.height);
         testY = this.posY;
     }
