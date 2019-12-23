@@ -9,7 +9,10 @@ let phase = 1
 let imFloor = "no"
 let power = 15;
 let jumperJump = []
-
+let w2 = window.innerWidth;
+let h2 = window.innerHeight;
+let hPJ = h*0.1 // Alto pj
+let wPJ = w*0.05 // Ancho pj
 
 let go = false;
 let jumperMove = undefined;
@@ -50,7 +53,7 @@ const Game = {
 
     createGame: function () {
         this.background = new Background(this.ctx, this.width, this.height)
-        this.jumper = new Jumper(this.ctx, 100, 100, this.width, this.height)
+        this.jumper = new Jumper(this.ctx, wPJ, hPJ, this.width, this.height)
         this.obstacles = new Obstacles(this.ctx);
     },
 

@@ -15,8 +15,8 @@ class Jumper {
 
         this.posX = canvasWidth / 2 - height / 2;
 
-        this.posY0 = canvasHeight * 0.96 - width;
-        this.posY = canvasHeight * 0.96 - width;
+        this.posY0 = canvasHeight * 0.95 - width;
+        this.posY = canvasHeight * 0.95 - width;
 
         // Movimiento
 
@@ -123,7 +123,7 @@ class Jumper {
 
     changePhase(){
         imFloor = "no"
-        this.posY = this.posY + 700
+        this.posY = this.posY + h*0.7
             
     
     }
@@ -133,7 +133,7 @@ class Jumper {
 
         
 
-        let yBot = Math.floor(this.posY + 105) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
+        let yBot = Math.floor(this.posY + hPJ + 5) // le resto 116 para que cuente desde la parte de abajo del Jumper.        
 
         if (yBot > Math.floor(obsY[0]) && yBot < Math.floor(obsY[0] + 10)) {
             
@@ -163,7 +163,7 @@ class Jumper {
         let num = 5
         let xIzq = Math.floor(this.posX + 25);
         let xDrc = Math.floor(this.posX + 65)
-        let yBot = Math.floor(this.posY + 100) 
+        let yBot = Math.floor(this.posY + hPJ) 
         let yTop = Math.floor(this.posY) 
         
         if(phase == 1){
